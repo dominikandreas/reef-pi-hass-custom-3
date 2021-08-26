@@ -1,10 +1,8 @@
 {
-  "name": "Reef Pi integration for Home Assistant (clone for 2nd reef-pi server)",
+  "name": "Reef Pi integration for Home Assistant (clone for 3rd reef-pi server)",
   "render_readme": true,
-  "domains": ["reef_pi2"],
-  "documentation": "https://github.com/dominikandreas/reef-pi-hass-custom",
-  "issue_tracker": "https://github.com/dominikandreas/reef-pi-hass-custom/issues",
+  "domains": ["reef_pi3"],
+  "documentation": "https://github.com/dominikandreas/reef-pi-hass-custom-3",
+  "issue_tracker": "https://github.com/dominikandreas/reef-pi-hass-custom-3/issues",
   "zip_release": true,
-  "filename": "reef_pi2.zip",
-  "iot_class": ["Local Pull"]
-}
+  "filename": "ree

@@ -3,7 +3,7 @@
 import logging
 from datetime import timedelta
 
-DOMAIN = "reef_pi2"
+DOMAIN = "reef_pi3"
 
 HOST = "host"
 USER = "username"
