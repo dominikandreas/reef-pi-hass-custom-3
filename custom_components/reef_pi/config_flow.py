@@ -11,9 +11,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 
-from .const import DOMAIN
+from .const import DOMAIN, UPDATE_INTERVAL_MIN
 
-from .api import ReefApi, CannotConnect, InvalidAuth
+from .async_api import ReefApi, CannotConnect, InvalidAuth
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,7 +21,8 @@ STEP_USER_DATA_SCHEMA = vol.Schema({
     vol.Required("host", default="https://127.0.0.1"): str,
     vol.Required("username", default="reef-pi"): str,
     vol.Required("password", default=""): str,
-    vol.Optional("verify", default=False): bool
+    vol.Optional("verify", default=False): bool,
+    vol.Optional("update_interval", default = UPDATE_INTERVAL_MIN.total_seconds()): int
 })
 
 
@@ -32,8 +33,8 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     """
     hub = ReefApi(data["host"], verify=data["verify"])
 
-    await hass.async_add_executor_job(hub.authenticate, data["username"], data["password"])
-    info = await hass.async_add_executor_job(hub.info)
+    await hub.authenticate(data["username"], data["password"])
+    info = await hub.info()
 
     # Return info that you want to store in the config entry.
     return {"title": info["name"]}
