@@ -1,0 +1,19 @@
+- id: uv-lock-check
+  name: uv-lock-check
+  description: run uv lock --check to validate lock file is up to date
+  entry: uv lock --check
+  language: python
+  language_version: python3
+  pass_filenames: false
+  files: ^pyproject.toml$
+- id: uv-sync
+  name: uv-sync
+  description: sync current working set with uv.lock
+  entry: uv sync
+  language: python
+  language_version: python3
+  pass_filenames: false
+  stages:
+    - post-checkout
+    - post-merge
+  always_run: true

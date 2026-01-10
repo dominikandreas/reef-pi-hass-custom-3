@@ -1,7 +1,16 @@
 __pycache__
+*.pyc
 *~
 .DS_Store
 
 .vscode
 .venv
 /output
+cookie*
+auth*
+.env
+
+# PDM (migrated to uv)
+pdm.lock
+.pdm-python
+__pypackages__

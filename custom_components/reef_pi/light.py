@@ -1,14 +1,11 @@
 from math import ceil
+
+from homeassistant.components.light import ATTR_BRIGHTNESS, LightEntity
+from homeassistant.components.light.const import ColorMode
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.components.light import (
-    ATTR_BRIGHTNESS,
-    SUPPORT_BRIGHTNESS,
-    LightEntity,
-)
 
-from .const import _LOGGER, DOMAIN, MANUFACTURER
+from .const import _LOGGER, DOMAIN
 
-from datetime import datetime
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Add multiple entity from a config_entry."""
@@ -19,6 +16,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     ]
 
     async_add_entities(manual_lights)
+
 
 class ReefPiLight(CoordinatorEntity, LightEntity):
     def __init__(self, id, name, coordinator):
@@ -42,7 +40,7 @@ class ReefPiLight(CoordinatorEntity, LightEntity):
         return self._name
 
     @property
-    def available(self):
+    def available(self) -> bool:
         """Return if available"""
         return self._id in self.api.lights.keys()
 
@@ -55,20 +53,25 @@ class ReefPiLight(CoordinatorEntity, LightEntity):
         return self.api.lights[self._id]["attributes"]
 
     @property
-    def is_on(self):
+    def is_on(self) -> bool:
         """Return true if light is on."""
         return self.api.lights[self._id]["state"]
 
     @property
-    def brightness(self):
+    def brightness(self) -> int | None:
         """Return the brightness of this light between 0..255."""
-        real_value = round(self.api.lights[self._id]["value"] * 2.55)
+        real_value = int(round(self.api.lights[self._id]["value"] * 2.55))
         return real_value
 
     @property
-    def supported_features(self):
-        """Return the supported features."""
-        return SUPPORT_BRIGHTNESS
+    def supported_color_modes(self) -> set[str] | None:
+        """Flag supported color modes."""
+        return {ColorMode.BRIGHTNESS}
+
+    @property
+    def color_mode(self) -> str | None:
+        """Return the color mode of the light."""
+        return ColorMode.BRIGHTNESS
 
     async def async_turn_off(self, **kwargs):
         """Turn the light off."""

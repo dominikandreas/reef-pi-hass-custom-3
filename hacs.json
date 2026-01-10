@@ -1,8 +1,7 @@
 {
   "name": "Reef Pi integration for Home Assistant (clone for 3rd reef-pi server)",
-  "render_readme": true,
   "domains": ["reef_pi3"],
   "documentation": "https://github.com/dominikandreas/reef-pi-hass-custom-3",
   "issue_tracker": "https://github.com/dominikandreas/reef-pi-hass-custom-3/issues",
-  "zip_release": true,
-  "filename": "ree
+  "render_readme": true
+}
